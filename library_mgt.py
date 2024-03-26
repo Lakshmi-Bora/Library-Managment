@@ -1,28 +1,39 @@
-# This programme is written for a library to manage book checkouts, collections and reservations effectiently
+# This programme is written for a library to manage book checkouts, 
+# collections and reservations effectiently.
 
 from datetime import datetime, timedelta
 
 # Creating a library for the books' details
 library_collection = {"B1" : {"book name" : "Harry Potter - One", "copies" : 1,
-                               "borrowers": [], "reservers":[], "borrowed date" : [], "last date" : []},
+                               "borrowers": [], "reservers":[], 
+                               "borrowed date" : [], "due date" : []},
                       "B2" : {"book name" : "Harry Potter - Two", "copies" : 1,
-                               "borrowers": [], "reservers":[], "borrowed date" : [], "last date" : []},
+                               "borrowers": [], "reservers":[],
+                               "borrowed date" : [], "due date" : []},
                       "B3" : {"book name" : "Harry Potter - Three", "copies" : 1,
-                               "borrowers": [], "reservers":[], "borrowed date" : [], "last date" : []},
+                               "borrowers": [], "reservers":[],
+                               "borrowed date" : [], "due date" : []},
                       "B4" : {"book name" : "Harry Potter - Four", "copies" : 1,
-                               "borrowers": [], "reservers":[], "borrowed date" : [], "last date" : []},
+                               "borrowers": [], "reservers":[], 
+                               "borrowed date" : [], "due date" : []},
                       "B5" : {"book name" : "Harry Potter- Five", "copies" : 1,
-                               "borrowers": [], "reservers":[], "borrowed date" : [], "last date" : []},
+                               "borrowers": [], "reservers":[], 
+                               "borrowed date" : [], "due date" : []},
                       "B6" : {"book name" : "Harry Potter - Six", "copies" : 1,
-                               "borrowers": [], "reservers":[], "borrowed date" : [], "last date" : []},
+                               "borrowers": [], "reservers":[], 
+                               "borrowed date" : [], "due date" : []},
                       "B7" : {"book name" : "Harry Potter - Seven", "copies" : 1,
-                               "borrowers": [], "reservers":[], "borrowed date" : [], "last date" : []},
+                               "borrowers": [], "reservers":[], 
+                               "borrowed date" : [], "due date" : []},
                       }
 
 # Creating a library for the users' details
-library_users = {"L1" : {"user name" : "George", "borrowings":[], "reservations" : [], "fines" : []},
-                 "L2" : {"user name" : "John", "borrowings":[], "reservations" : [], "fines" : []},
-                 "L3" : {"user name" : "Olive", "borrowings":[], "reservations" : [], "fines" : []}
+library_users = {"L1" : {"user name" : "George", "borrowings":[],
+                          "reservations" : [], "fines" : []},
+                 "L2" : {"user name" : "John", "borrowings":[], 
+                         "reservations" : [], "fines" : []},
+                 "L3" : {"user name" : "Olive", "borrowings":[], 
+                         "reservations" : [], "fines" : []}
                 }
 
 # Defining a function to check out a book
@@ -40,10 +51,10 @@ def checkout_book(user_id,book_id,borrow_date):
                 library_collection[book_id]["borrowers"].append(user_id)
                 library_users[user_id]["borrowings"].append(book_id)
                 library_collection[book_id]["borrowed date"].append(borrow_date)
-                library_collection[book_id]["last date"].append(end_date)
+                library_collection[book_id]["due date"].append(end_date)
 
                 print("Your check-out is successful")
-                print(f"The last date to be returned :  {end_date}")
+                print(f"The last date to be returned: {end_date}")
                 print(library_users[user_id])
 
             elif user_id in library_collection[book_id]["reservers"]:
@@ -56,10 +67,10 @@ def checkout_book(user_id,book_id,borrow_date):
                 library_collection[book_id]["borrowers"].append(user_id)
                 library_users[user_id]["borrowings"].append(book_id)
                 library_collection[book_id]["borrowed date"].append(borrow_date)
-                library_collection[book_id]["last date"].append(end_date)
+                library_collection[book_id]["due date"].append(end_date)
 
                 print("Your check-out is successful")
-                print(f"The last date to be returned :  {end_date}")
+                print(f"The last date to be returned: {end_date}")
                 print(library_users[user_id])
                                   
             else:
@@ -95,10 +106,10 @@ def renewing_book(user_id,book_id,renew_date):
             end_date = renew_date + timedelta(days = 21)
             library_collection[book_id]["borrowed date"].pop()
             library_collection[book_id]["borrowed date"].append(renew_date)
-            library_collection[book_id]["last date"].pop()
-            library_collection[book_id]["last date"].append(end_date)
+            library_collection[book_id]["due date"].pop()
+            library_collection[book_id]["due date"].append(end_date)
             print("Your renewal is successful")
-            print(f"The last date to be returned :  {end_date}")            
+            print(f"The last date to be returned: {end_date}")            
             print(library_users[user_id])
 
         else:
@@ -112,7 +123,7 @@ def returning_book(user_id,book_id,return_date):
 
     if book_id in library_users[user_id]["borrowings"]:
 
-        penalty_days = return_date - library_collection[book_id]["last date"][0]
+        penalty_days = return_date - library_collection[book_id]["due date"][0]
         penalty_days = penalty_days.days
 
         if penalty_days > 0:
@@ -122,7 +133,7 @@ def returning_book(user_id,book_id,return_date):
         library_collection[book_id]["copies"] += 1
         library_collection[book_id]["borrowers"].remove(user_id)
         library_collection[book_id]["borrowed date"].pop()
-        library_collection[book_id]["last date"].pop()      
+        library_collection[book_id]["due date"].pop()      
         library_users[user_id]["borrowings"].remove(book_id)
 
         print("Your book is successfully returned")
@@ -132,7 +143,7 @@ def returning_book(user_id,book_id,return_date):
         print("The user did not borrow this book")
 
 # Take the input of user id    
-user_id = input("Please enter your id :  ")
+user_id = input("Please enter your id:  ")
 user_id = user_id.capitalize()
 date_format = "%d/%m/%Y"
 today_date = datetime.today().strftime(date_format)
