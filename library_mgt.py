@@ -26,7 +26,7 @@ library_users = {"L1" : {"user name" : "George", "borrowings":[], "reservations"
                 }
 
 # Defining a function to check out a book
-def borrowing_book(user_id,book_id,borrow_date):
+def checkout_book(user_id,book_id,borrow_date):
     
     if len(library_users[user_id]["borrowings"]) < 3:
 
@@ -177,7 +177,7 @@ if user_id in library_users:
                     if book_id in library_collection:   
 
                         if service == '1':
-                            borrowing_book(user_id,book_id,today_date)
+                            checkout_book(user_id,book_id,today_date)
                             
                         elif service == '2':
                             reserving_book(user_id,book_id,today_date)
